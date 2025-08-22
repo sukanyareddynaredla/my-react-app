@@ -16,9 +16,10 @@ phases:
   post_build:
     commands:
       - echo Deploying to S3...
-      - aws s3 sync build/ s3://my-react-app-website-20 --delete
+      - aws s3 sync build/ s3://my-react-website-20 --delete
 
 artifacts:
   files:
     - '*/'
   base-directory: build
+
