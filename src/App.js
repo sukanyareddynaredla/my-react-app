@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+version: 0.2
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo Installing dependencies...
+      - npm ci || npm install
 
-export default App;
+  build:
+    commands:
+      - echo Building the React app...
+      - npm run build
+
+  post_build:
+    commands:
+      - echo Deploying to S3...
+      - aws s3 sync build/ s3://my-react-website-20 --delete
+
+artifacts:
+  files:
+    - '*/'
+  base-directory: build
